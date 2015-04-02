@@ -1,0 +1,124 @@
+import acm.io.*;
+import java.awt.*;
+import java.util.*;
+import acm.program.*;
+import acm.graphics.*;
+
+
+public class HTLUtilitiesTester2 extends ConsoleProgram //extends HTLUtilities implements HeadTailList
+{
+  private HTLUtilities myList, myIntList;
+ 
+  public void init() 
+  {
+    String cmd = "";
+    HeadTailList<String> myList, myList2;
+    myList = HTLUtilities.readStringListSig(getConsole() , "X", "Type in \"X\" to end the list ");
+    String myPrintedList = HTLUtilities.printList(myList);
+    println(myPrintedList);
+    //
+    print("Available commands \"add\", \"find\", \"remove\", \"display\", \"quit\"");
+    Scanner in = new Scanner(System.in); 
+    println("Please enter 1st Command ");
+    cmd = readLine();
+    /*
+     println("Please enter name you want associated with this command ");
+     String name = readLine();
+     */
+    do
+    {
+      if (cmd.equals("add"))
+      {
+        println("Please enter name you want associated with this command ");
+        String name = readLine();
+        boolean found = HTLUtilities.find(myList, name);
+        
+        if (found==true)
+        {
+          println("This name is already in your list");
+          print("Please enter next Command ");
+          cmd = readLine();
+        }
+        else
+        {
+          myList = new LinkedHeadTailList<String>(name, myList);
+          //myList = HTLUtilities.readStringList(getConsole(), 1, name);
+          println("This was added");
+          print("Please enter next Command ");
+          cmd = readLine();
+        }
+        found = false;
+      }
+      else if (cmd.equals("remove"))
+      {
+        println("Please enter name you want associated with this command ");
+        String name = readLine();
+        boolean found2 = HTLUtilities.find(myList, name);
+        if (found2==true)
+        {
+          println("This name will be removed from your list");
+          //problem below
+          
+          myList = HTLUtilities.cull(myList, name);
+          
+          //problem above
+          print("Please enter next Command ");
+          cmd = readLine();
+        }
+        else
+        {
+          println("This name wasn't in the list originally");
+          print("Please enter next Command ");
+          cmd = readLine();
+        }
+        found2 = false;
+      }
+      else if (cmd.equals("display"))
+      {
+        myPrintedList = HTLUtilities.printList(myList);
+        println(myPrintedList);
+        print("Please enter next Command ");
+        cmd = readLine();
+      }
+      else if (cmd.equals("find"))
+      {
+        println("Please enter name you want associated with this command ");
+        String name = readLine();
+        boolean found3 = HTLUtilities.find(myList, name);
+        
+        if (found3==true)
+        {
+          println("This name is in your list");
+          print("Please enter next Command ");
+          cmd = readLine();
+        }
+        else
+        {
+          println("This name was not in your list");
+          print("Please enter next Command ");
+          cmd = readLine();
+        }
+        found3 = false;
+      }
+      else
+      {
+        println("Command not found please try again ");
+        cmd = readLine();
+        //enter another command
+      }
+      
+      
+    }
+    while(!cmd.equals("quit"));
+    //Create a string of my printed list
+    
+    System.out.println(myPrintedList);
+    //boolean found = HTLUtilities.find(myList, "Tyler");
+    //System.out.println("Found = " + found);
+  }
+  
+  public static void main(String [] args) {
+    new HTLUtilitiesTester2().start();
+  }
+  
+}
